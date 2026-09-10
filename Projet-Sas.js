@@ -357,5 +357,16 @@ switch(choix){
         if(!isthere){console.log(`tickets introuvable !! `)}
 
         break;
-    
+    case 7:
+        for (let i = 0 ;i < trips.length ; i++){
+           for (let k = 0 ; k < trips.length - i-1 ;k++){
+            if (trips[k].price > trips[k + 1].price){
+                [trips[k], trips[k+1]] = [trips[k+1], trips[k] ]
+            }
+           } 
+        }
+        for(let i = 0 ; i < trips.length;i++){
+            console.log(`${trips[i].departure} --> ${trips[i].destination} : ${trips[i].price} Dh`)
+        }
+        break;
     
