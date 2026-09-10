@@ -19,7 +19,7 @@ const trips = [
         departureTime: "08:00",
         arrivalTime: "10:30",
         price: 90,
-        availableSeats: 00
+        availableSeats: 0
     },
     {
         id: 3,
@@ -309,4 +309,15 @@ switch(choix){
         }
         console.log(tickets)   
         break;
+    case 3:
+        for(let i = 0; i < tickets.length ;i++){
+            // verificationDeTrajets(tickets[i].tripID)
+            console.log(`#${tickets[i].id}`);
+            console.log(`Passager : ${tickets[i].passengerName}`);
+            // console.log(`Trajet : ${trajet.departure} -> ${trajet.destination}`);
+            console.log(`Place : ${tickets[i].seatnumber}`);
+            console.log(`Prix : ${tickets[i].price}`);                    
+        }
+        break;
+        
     
