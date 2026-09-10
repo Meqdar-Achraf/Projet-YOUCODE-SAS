@@ -1,6 +1,5 @@
 const prompt= require(`prompt-sync`)();
 
-
 // variables
 const trips = [
     {
@@ -19,7 +18,7 @@ const trips = [
         departureTime: "08:00",
         arrivalTime: "10:30",
         price: 90,
-        availableSeats: 0
+        availableSeats: 50
     },
     {
         id: 3,
@@ -184,11 +183,8 @@ const trips = [
         availableSeats: 50
     }
 ];
-let seats = [];
 const tickets = [];
 let trajet
-let tripID
-let passager
 let ticket, j = 1 ;
 let choix
 
@@ -222,15 +218,25 @@ function operation1(){
 }//Afficher les trajets
 
 function verificationDeTrajets(ticID){
+    let available = false    
     for (let i = 0 ; i< trips.length ; i++){
         if (ticID == trips[i].id){
             trajet = trips[i]
             available = true;
-            // break;
+    // break;
         }
     }
     return available;
-}//vérifier que le trajet existe ;
+}
+
+function trajetdest(loop){
+    const trajet_trip=trips.find((trjt) => trjt.id === tickets[loop].tripID)
+    
+    return trajet_trip;
+}
+
+
+
 
 
 do{
@@ -247,22 +253,6 @@ switch(choix){
         let passager = prompt("Vouillez entrer votre nom : ");
         let trajetID = Number(prompt("vouillez entrer l'ID de trajet : "));
         let place = seat(trajetID);
-        let available = false
-        let trajet
-
-        //vérifier que le trajet existe ;
-        function verificationDeTrajets(ticID){
-            for (let i = 0 ; i< trips.length ; i++){
-                if (ticID == trips[i].id){
-                    trajet = trips[i]
-                    available = true;
-            // break;
-                }
-            }
-            return available;
-        }
-
-        verificationDeTrajets(trajetID);
 
         function ticketavecsucces(){
             console.log("Ticket acheté avec succès.");
@@ -290,7 +280,7 @@ switch(choix){
             }
         }
 
-        if (verificationDeTrajets() == true && trajet.availableSeats > 0){
+        if (verificationDeTrajets(trajetID) == true && trajet.availableSeats > 0){
             ticket = {
                 id : j++,
                 passengerName : passager,
@@ -301,20 +291,22 @@ switch(choix){
             trajet.availableSeats--
             tickets.push(ticket)
             ticketavecsucces()
-        }else if (available == false){
+        }else if (verificationDeTrajets(trajetID) == false){
             console.log("Trajet introuvable.");
 
         }else{
             console.log("Train complet.")
-        }
-        console.log(tickets)   
+        }   
         break;
     case 3:
+        if (tickets.length == 0){
+            console.log("aucun ticket creer.")
+        }
         for(let i = 0; i < tickets.length ;i++){
-            // verificationDeTrajets(tickets[i].tripID)
+            let trajet_trip = trajetdest(i)
             console.log(`#${tickets[i].id}`);
             console.log(`Passager : ${tickets[i].passengerName}`);
-            // console.log(`Trajet : ${trajet.departure} -> ${trajet.destination}`);
+            console.log(`Trajet : ${trajet_trip.departure} -> ${trajet_trip.destination}`);
             console.log(`Place : ${tickets[i].seatnumber}`);
             console.log(`Prix : ${tickets[i].price}`);                    
         }
@@ -334,6 +326,7 @@ switch(choix){
             }
         }
         tickets.splice(index, 1)
+        console.log("ticket annuler avec succes.")
         ++trip.availableSeats
         
         break;
@@ -349,13 +342,21 @@ switch(choix){
             if(isthere){
                 console.log(`Ticket#${tickets[i].id}`)
                 console.log(`passager : ${tickets[i].passengerName}`)
-                console.log(``)
+                console.log(`${trajetdest(i).departure} --> ${trajetdest(i).destination}`)
                 console.log(`place : ${tickets[i].seatnumber}`)
                 console.log(`Pix : ${tickets[i].price}`)
             }
         }
         if(!isthere){console.log(`tickets introuvable !! `)}
 
+
+        break;
+    case 6:
+        let ville =prompt("vouillez entrer la ville de depart : ")
+        const filtr = trips.filter((objet)=> objet.departure == ville)
+        for (let i= 0; i < filtr.length ; i++){        
+        console.log(`${filtr[i].departure} --> ${filtr[i].destination} : ${filtr[i].price} Dh`)
+        }
         break;
     case 7:
         for (let i = 0 ;i < trips.length ; i++){
@@ -368,6 +369,7 @@ switch(choix){
         for(let i = 0 ; i < trips.length;i++){
             console.log(`${trips[i].departure} --> ${trips[i].destination} : ${trips[i].price} Dh`)
         }
+
         break;
     case 8:
         console.log("===BONUS===")
@@ -386,4 +388,4 @@ switch(choix){
 }
 
 }while(choix != 0)
-    
+
