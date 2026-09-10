@@ -18,7 +18,7 @@ const trips = [
         departureTime: "08:00",
         arrivalTime: "10:30",
         price: 90,
-        availableSeats: 50
+        availableSeats: 0
     },
     {
         id: 3,
@@ -304,7 +304,7 @@ switch(choix){
         }
         for(let i = 0; i < tickets.length ;i++){
             let trajet_trip = trajetdest(i)
-            console.log(`#${tickets[i].id}`);
+            console.log(`#ticket: ${tickets[i].id}`);
             console.log(`Passager : ${tickets[i].passengerName}`);
             console.log(`Trajet : ${trajet_trip.departure} -> ${trajet_trip.destination}`);
             console.log(`Place : ${tickets[i].seatnumber}`);
@@ -318,14 +318,12 @@ switch(choix){
             console.log ("Ticket ID introuvable")
             return
         };
-        const trip = trips.find((obj) => obj.id == Annul.tripID)
-        let index
-        for(let i =0; i < tickets; i++){
-            if (Annulerticket == tickets[i].id){
-                index = i
-            }
-        }
+
+
+        let index = tickets.findIndex((condition) => condition == Annul)
         tickets.splice(index, 1)
+
+        const trip = trips.find((obj) => obj.id == Annul.tripID)
         console.log("ticket annuler avec succes.")
         ++trip.availableSeats
         
