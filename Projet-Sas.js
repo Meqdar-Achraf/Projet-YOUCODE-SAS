@@ -243,3 +243,70 @@ switch(choix){
     case 1:
         operation1()
         break;
+    case 2:
+        let passager = prompt("Vouillez entrer votre nom : ");
+        let trajetID = Number(prompt("vouillez entrer l'ID de trajet : "));
+        let place = seat(trajetID);
+        let available = false
+        let trajet
+
+        //vérifier que le trajet existe ;
+        function verificationDeTrajets(ticID){
+            for (let i = 0 ; i< trips.length ; i++){
+                if (ticID == trips[i].id){
+                    trajet = trips[i]
+                    available = true;
+            // break;
+                }
+            }
+            return available;
+        }
+
+        verificationDeTrajets(trajetID);
+
+        function ticketavecsucces(){
+            console.log("Ticket acheté avec succès.");
+            console.log(`ticket #${ticket.id}`);
+            console.log(`passager : ${ticket.passengerName}`);
+            console.log(`trajet : ${trajet.departure} -> ${trajet.destination}`);
+            console.log(`place : ${ticket.seatnumber}`);
+            console.log(`prix : ${ticket.price}`)
+        }
+
+        function seat(tid){
+            for (let i = 1 ;i<=50 ; i++){
+                let isdisponible= true
+                for  (let k=0; k < tickets.length; k++ ){
+                    if( tickets[k].tripID === tid){
+                        if (i == tickets[k].seatnumber){
+                            isdisponible = false
+                        }
+                    }
+                }       
+                if (isdisponible == true){
+                    return i;
+                    break;
+                }
+            }
+        }
+
+        if (verificationDeTrajets() == true && trajet.availableSeats > 0){
+            ticket = {
+                id : j++,
+                passengerName : passager,
+                tripID : trajet.id,
+                seatnumber : place,
+                price : trajet.price
+            }   
+            trajet.availableSeats--
+            tickets.push(ticket)
+            ticketavecsucces()
+        }else if (available == false){
+            console.log("Trajet introuvable.");
+
+        }else{
+            console.log("Train complet.")
+        }
+        console.log(tickets)   
+        break;
+    
