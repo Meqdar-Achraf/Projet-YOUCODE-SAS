@@ -369,4 +369,21 @@ switch(choix){
             console.log(`${trips[i].departure} --> ${trips[i].destination} : ${trips[i].price} Dh`)
         }
         break;
+    case 8:
+        console.log("===BONUS===")
+        console.log(`le nombre des tickets vendus : ${tickets.length}`)
+        let somme = 0
+        for(let i = 0 ; i < tickets.length ; i++){
+            somme += tickets[i].price
+        }
+        console.log(`Chiffre d'affaires total : ${somme} Dh`)
+        break;
+    case 0:
+        console.log("Quitter le programme....")
+        break;
+    default:
+        console.log("Invalide option.");
+}
+
+}while(choix != 0)
     
