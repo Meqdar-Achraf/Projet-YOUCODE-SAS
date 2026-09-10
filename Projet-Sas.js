@@ -319,5 +319,22 @@ switch(choix){
             console.log(`Prix : ${tickets[i].price}`);                    
         }
         break;
+    case  4:
+        let Annulerticket = Number(prompt("vouillez entrer l'ID du ticket pour l'annuler : "));
+        const Annul = tickets.find((tick) => tick.id == Annulerticket);
+        if(!Annul){ 
+            console.log ("Ticket ID introuvable")
+            return
+        };
+        const trip = trips.find((obj) => obj.id == Annul.tripID)
+        let index
+        for(let i =0; i < tickets; i++){
+            if (Annulerticket == tickets[i].id){
+                index = i
+            }
+        }
+        tickets.splice(index, 1)
+        ++trip.availableSeats
         
+        break;
     
