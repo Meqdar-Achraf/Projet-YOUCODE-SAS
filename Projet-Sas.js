@@ -337,4 +337,24 @@ switch(choix){
         ++trip.availableSeats
         
         break;
+    case  5:
+        let recherche = prompt("vouillez entrer le nom de passager : ");
+
+        for(let i =0; i < tickets.length ; i++ ){
+            var isthere =false 
+            if(tickets[i].passengerName === recherche){
+
+                isthere = !isthere                    
+            }
+            if(isthere){
+                console.log(`Ticket#${tickets[i].id}`)
+                console.log(`passager : ${tickets[i].passengerName}`)
+                console.log(``)
+                console.log(`place : ${tickets[i].seatnumber}`)
+                console.log(`Pix : ${tickets[i].price}`)
+            }
+        }
+        if(!isthere){console.log(`tickets introuvable !! `)}
+
+        break;
     
